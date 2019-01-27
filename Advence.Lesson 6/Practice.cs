@@ -39,7 +39,6 @@ namespace Advence.Lesson_6
 				Console.WriteLine(file.CreationTime);
 				Console.WriteLine(file.Length);
 			}
-			
 		}
 
         /// <summary>
@@ -52,8 +51,6 @@ namespace Advence.Lesson_6
 			Console.WriteLine(dir.CreationTime);
 			//Console.WriteLine(dir.);
 		}
-
-
         /// <summary>
         /// AL6-P4/7-CopyFile. Скопировать первый файл из Program Files в новую папку.
         /// </summary>
@@ -84,7 +81,7 @@ namespace Advence.Lesson_6
 				adapter.Write(" ");
 				if (i % 2 == 0) adapter.Write("User 1: ");
 				else adapter.Write("User 2: ");
-				adapter.Write(text);0
+				adapter.Write(text);
 				adapter.WriteLine();
 				adapter.Close();
 				//stream.Close();
@@ -98,14 +95,35 @@ namespace Advence.Lesson_6
         /// </summary>
         public static void AL6_P6_7_ConsoleSrlzn()
         {
+			//Создание экземпляра объекта
             Song song = new Song()
             {
                 Title = "Title 1",
                 Duration = 247,
                 Lyrics = "Lyrics 1"
             };
-           
-        }
+			//Выводим десериализованный объект в консоль
+			XmlSerializer serializer = new XmlSerializer(typeof(Song));
+			serializer.Serialize(Console.Out, song);
+			//Создаем поток в памяти
+			MemoryStream memStream = new MemoryStream();
+			//Десериализуем объект в поток
+			serializer.Serialize(memStream, song);
+			//Создаем строку
+			string xmlString;
+
+			using (StreamReader strReader = new StreamReader(memStream))
+			{
+				//Указываем текущую позицию в потоке
+				strReader.BaseStream.Position = 0;
+				//Записываем в строку поток из памяти
+				xmlString = strReader.ReadToEnd();
+			}
+			using (TextReader reader = new StringReader(xmlString))
+			{
+				var strToSong = serializer.Deserialize(reader);
+			}
+		}
 
         /// <summary>
         /// AL6-P7/7-FileSrlz.
@@ -113,8 +131,23 @@ namespace Advence.Lesson_6
         /// </summary>
         public static void AL6_P7_7_FileSrlz()
         {
+			//Создание экземпляра объекта
+			Song song = new Song()
+			{
+				Title = "Title 1",
+				Duration = 247,
+				Lyrics = "Lyrics 1"
+			};
+			XmlSerializer serializer = new XmlSerializer(typeof(Song));
+			using (FileStream fs = new FileStream("D://song.xml", FileMode.OpenOrCreate))
+			{
+				serializer.Serialize(fs, song);
+				Console.WriteLine("Объект сериализован");
+			}
 
-        }
+			var deserialisedSong = serializer.Deserialize(new FileStream("D://song.xml", FileMode.Open));
+			Console.WriteLine("Объект десериализован");
+		}
 
     }
 }

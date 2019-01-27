@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace Advence.Lesson_6
 {
-    //[Serializable]
+    [Serializable]
     public class Song
     {
         public string Title;

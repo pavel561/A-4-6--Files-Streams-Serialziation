@@ -23,13 +23,18 @@ namespace Advence.Lesson_6
 			//SericalizationExample();
 			//XMLDocumentExample();
 			//Lesson.XMLReaderExample();
+
+
 			//Practice.AL6_P1_7_DirInfo();
 			//Practice.AL6_P2_7_FileInfo();
 			//Practice.AL6_P3_7_CreateDir();
 			//Practice.AL6_P4_7_CopyFile();
+			//Practice.AL6_P5_7_FileChat();
+			//Practice.AL6_P6_7_ConsoleSrlzn();
+			Practice.AL6_P7_7_FileSrlz();
+
 			//Practice3_Task1_XMLSerizlization();
 
-			Practice.AL6_P5_7_FileChat();
 
 			Console.ReadLine();
         }         
